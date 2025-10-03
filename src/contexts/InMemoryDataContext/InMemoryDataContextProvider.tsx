@@ -1,11 +1,11 @@
-import { type FC, type ReactElement, useState } from 'react'
+import { type FC, type ReactNode, useState } from 'react'
 
 import { HEROES } from '../../constants/heroes.ts'
 import type { Hero } from '../../types/hero.ts'
 import InMemoryDataContext from './InMemoryDataContext.tsx'
 
 type InMemoryDataContextProviderProps = {
-  children: ReactElement | ReactElement[]
+  children: ReactNode
 }
 
 const InMemoryDataContextProvider: FC<InMemoryDataContextProviderProps> = ({
@@ -22,10 +22,15 @@ const InMemoryDataContextProvider: FC<InMemoryDataContextProviderProps> = ({
   }
 
   const searchHeroes = async (term: string): Promise<Hero[]> => {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return Promise.resolve([])
+    }
+
     const heroes = await getHeroes()
 
     return heroes.filter(({ name }) =>
-      name.toLowerCase().includes(term.trim().toLowerCase())
+      name.toLowerCase().includes(term.toLowerCase())
     )
   }
 

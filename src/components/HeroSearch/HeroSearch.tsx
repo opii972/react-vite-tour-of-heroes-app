@@ -1,24 +1,24 @@
-import { type ChangeEvent, useState } from 'react'
+import { type ChangeEvent, type FC, useState } from 'react'
 import { Link } from 'react-router'
 import { useDebouncedCallback } from 'use-debounce'
 
-import useSearch from '../../hooks/useSearch.ts'
 import type { Hero } from '../../types/hero.ts'
 import styles from './HeroSearch.module.css'
 
-const HeroSearch = () => {
+type HeroSearchProps = {
+  heroes: Hero[]
+  onChange?: (term: string) => void
+}
+
+const HeroSearch: FC<HeroSearchProps> = ({ heroes, onChange }) => {
   const [heroName, setHeroName] = useState('')
   const [debouncedTerm, setDebouncedTerm] = useState('')
-  const { search } = useSearch()
-  const [heroes, setHeroes] = useState<Hero[]>([])
   const debounced = useDebouncedCallback(async (term: string) => {
     setDebouncedTerm(term)
 
-    /** Ignore new term if same as previous term **/
+    /** Ignore new term if similar to previous term **/
     if (debouncedTerm !== heroName) {
-      const heroesFound = await search(term)
-
-      setHeroes(heroesFound)
+      onChange?.(term)
     }
   }, 300)
 
@@ -26,7 +26,6 @@ const HeroSearch = () => {
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
     setHeroName(value)
-
     debounced(value)
   }
 

@@ -1,9 +1,9 @@
-import { type FC, type ReactElement, useState } from 'react'
+import { type FC, type ReactNode, useState } from 'react'
 
 import MessageContext from './MessageContext.tsx'
 
 type MessageContextProviderProps = {
-  children: ReactElement | ReactElement[]
+  children: ReactNode
 }
 
 const MessageContextProvider: FC<MessageContextProviderProps> = ({

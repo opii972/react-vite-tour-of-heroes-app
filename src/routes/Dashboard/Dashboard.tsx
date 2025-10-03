@@ -1,13 +1,24 @@
+import { useState } from 'react'
 import { Link } from 'react-router'
 
 import HeroSearch from '../../components/HeroSearch/HeroSearch.tsx'
 import { useFetchHeroes } from '../../hooks/useFetchHeroes.ts'
+import useSearch from '../../hooks/useSearch.ts'
+import type { Hero } from '../../types/hero.ts'
 import styles from './Dashboard.module.css'
 
 const Dashboard = () => {
   const { isLoading, data: heroes } = useFetchHeroes()
+  const { search } = useSearch()
+  const [heroesFound, setHeroesFound] = useState<Hero[]>([])
 
   const getHeroes = () => heroes.slice(1, 5)
+
+  const searchHeroes = async (term: string) => {
+    const result = await search(term)
+
+    setHeroesFound(result)
+  }
 
   return (
     <>
@@ -25,7 +36,7 @@ const Dashboard = () => {
             ))}
           </div>
 
-          <HeroSearch />
+          <HeroSearch heroes={heroesFound} onChange={searchHeroes} />
         </>
       )}
     </>

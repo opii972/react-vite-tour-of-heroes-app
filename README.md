@@ -27,6 +27,7 @@ The generated base project also includes some changes such as:
 
 2. [`Prettier`](https://prettier.io/docs/install.html) by adding [`eslint-config-prettier`](https://github.com/prettier/eslint-plugin-prettier?tab=readme-ov-file#configuration-new-eslintconfigjs) and [`eslint-plugin-prettier`](https://typescript-eslint.io/users/what-about-formatting/#suggested-usage---prettier) configurations
 3. `CSS Modules` for styles
+4. [`Vitest`](https://vitest.dev/guide/) as testing framework powered by Vite + [`React Testing Library`](https://testing-library.com/docs/react-testing-library/intro) that helps to test UI components in a user-centric way
 
 ## Trying Online
 
@@ -113,6 +114,26 @@ Apply prettier format:
 
 ```bash
 $ npm run format
+```
+
+Run all tests:
+
+By default [vitest `includes`](https://vitest.dev/config/#include) `['**/*.{test,spec}.?(c|m)[jt]s?(x)']`.
+
+```bash
+$ npm run test
+```
+
+Run tests in watch mode:
+
+```bash
+$ npm run test:watch
+```
+
+Run all tests + check files format + check types:
+
+```bash
+$ npm run validate
 ```
 
 ## Browser Support

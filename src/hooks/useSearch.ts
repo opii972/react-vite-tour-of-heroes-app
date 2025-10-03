@@ -22,7 +22,7 @@ const useSearch = (): UseSearch => {
     const foundHeroes = await searchHeroes(term)
 
     log(
-      foundHeroes
+      foundHeroes.length
         ? `found heroes matching "${term}"`
         : `no heroes matching "${term}"`
     )
